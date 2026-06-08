@@ -29,6 +29,7 @@ func main() {
 		port = "8080"
 	}
 
+	// Log the server start message with the port number
 	log.Printf("Server running on port %s", port)
 	r.Run(":" + port)
 }
