@@ -10,7 +10,7 @@ import (
 func SetupRoutes(r *gin.Engine) {
 	// CORS configuration
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000", "https://rzkinr.github.io"},
+		AllowOrigins:     []string{"http://localhost:3000", "https://rzkinr.github.io", "https://kinur.my.id", "https://www.kinur.my.id",},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		AllowCredentials: true,
@@ -20,11 +20,11 @@ func SetupRoutes(r *gin.Engine) {
 	{
 		//public routes
 		api.POST("/login", handlers.Login)
-		api.GET("/projects", handlers.GetProjects)
-		api.GET("/projects/:id", handlers.GetProjectByID)
-		api.GET("/blogs", handlers.GetBlogs)
-		api.GET("/blogs/:slug", handlers.GetBlogBySlug)
-		api.POST("/contacts", handlers.CreateContact)
+		api.GET("/project", handlers.GetProjects)
+		api.GET("/project/:id", handlers.GetProjectByID)
+		api.GET("/blog", handlers.GetBlogs)
+		api.GET("/blog/:slug", handlers.GetBlogBySlug)
+		api.POST("/contact", handlers.CreateContact)
 
 		admin := api.Group("/admin")
 		admin.Use(middleware.AuthMiddleware())
