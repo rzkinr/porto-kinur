@@ -4,11 +4,12 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'backend/**'
 
 jobs:
   deploy-backend:
     runs-on: ubuntu-latest
-    if: contains(github.event.commits[0].modified, 'backend/')
 
     steps:
       - name: Deploy Backend to VPS
@@ -23,9 +24,3 @@ jobs:
             go build -o main .
             sudo systemctl restart portfolio-backend
             echo "Backend deployed successfully!"
-
-  deploy-frontend:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Frontend auto-deployed by Vercel
-        run: echo "Vercel handles frontend deployment automatically"
