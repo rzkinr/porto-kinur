@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
 import clsx from 'clsx';
 
@@ -23,7 +24,7 @@ export default function AdminLayout({
 
   useEffect(() => {
     if (!isLoginPage) {
-      const token = localStorage.getItem('token');
+      const token = Cookies.get('admin_token');
       if (!token) {
         router.push('/admin');
       }
@@ -31,7 +32,7 @@ export default function AdminLayout({
   }, [isLoginPage, router]);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    Cookies.remove('admin_token');
     router.push('/admin');
   };
 

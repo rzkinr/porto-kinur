@@ -91,10 +91,10 @@ export async function login(
 
 //admin helper
 function authHeaders() {
-  const token = localStorage.getItem('token');
+  const token = Cookies.get('admin_token');
   return {
     'Content-Type': 'application/json',
-    Authorization: token ? `Bearer ${token}` : '',
+    Authorization: `Bearer ${token}`,
   };
 }
 

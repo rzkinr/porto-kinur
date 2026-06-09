@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 import { login } from '@/lib/api';
 
 export default function AdminLogin() {
@@ -17,9 +18,7 @@ export default function AdminLogin() {
 
     const token = await login(form.username, form.password);
     if (token) {
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('token', token);
-      }
+      Cookies.set('admin_token', token, { expires: 1 });
       router.push('/admin/dashboard');
     } else {
       setError('Invalid username or password');
