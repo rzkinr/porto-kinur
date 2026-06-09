@@ -15,6 +15,8 @@ export default function BlogDetail() {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
+    console.log('Fetching blog post with slug:', slug);
+    console.time(process.env.NEXT_PUBLIC_API_URL + '/blogs/' + slug);
     getBlogBySlug(slug)
       .then((data) => {
         if (!data) setNotFound(true);
@@ -59,7 +61,7 @@ export default function BlogDetail() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3 }}>
           <Link
-            href='/blog'
+            href='/blogs'
             className='inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm'>
             <ArrowLeft size={16} /> Back to Blog
           </Link>

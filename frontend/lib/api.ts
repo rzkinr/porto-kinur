@@ -63,6 +63,7 @@ export interface ContactPayload {
   email: string;
   message: string;
 }
+
 //contact
 export async function sendContact(contact: ContactPayload): Promise<boolean> {
   const res = await fetch(`${API_URL}/contact`, {
