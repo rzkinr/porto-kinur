@@ -9,7 +9,6 @@ const navLinks = [
   { href: '/admin/dashboard', label: 'Dashboard' },
   { href: '/admin/projects', label: 'Projects' },
   { href: '/admin/blog', label: 'Blogs' },
-  { href: '/admin/skills', label: 'Skills' },
   { href: '/admin/messages', label: 'Messages' },
 ];
 

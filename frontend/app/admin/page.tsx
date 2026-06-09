@@ -17,7 +17,9 @@ export default function AdminLogin() {
 
     const token = await login(form.username, form.password);
     if (token) {
-      localStorage.setItem('token', token);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('token', token);
+      }
       router.push('/admin/dashboard');
     } else {
       setError('Invalid username or password');

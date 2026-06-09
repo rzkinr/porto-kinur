@@ -1,14 +1,13 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import LayoutWrapper from '@/components/LayoutWrapper';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Rizki Nur Rokhim - Developer',
-  description: 'Personal portofolio and mediocare',
+  title: 'Rizki Nur Rokhim — Developer',
+  description: 'Personal portfolio & branding',
 };
 
 export default function RootLayout({
@@ -19,10 +18,8 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${inter.className} bg-gray-950 text-gray-100 align-items-baseline`}>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        className={`${inter.className} bg-gray-950 text-gray-100 antialiased`}>
+        <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
   );
