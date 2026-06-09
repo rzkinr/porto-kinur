@@ -18,7 +18,7 @@ func SetupRoutes(r *gin.Engine) {
 
 	api := r.Group("/api")
 	{
-		//public routes
+		//public routess
 		api.POST("/login", handlers.Login)
 		api.GET("/projects", handlers.GetProjects)
 		api.GET("/projects/:id", handlers.GetProjectByID)
