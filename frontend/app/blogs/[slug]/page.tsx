@@ -15,8 +15,6 @@ export default function BlogDetail() {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    console.log('Fetching blog post with slug:', slug);
-    console.time(process.env.NEXT_PUBLIC_API_URL + '/blogs/' + slug);
     getBlogBySlug(slug)
       .then((data) => {
         if (!data) setNotFound(true);
