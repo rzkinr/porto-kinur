@@ -37,7 +37,7 @@ export default function AdminMessages() {
                   </a>
                 </div>
                 <span className='text-gray-500 text-xs'>
-                  {new Date(msg.created_at).toLocaleDateString('id-ID', {
+                  {new Date(msg.createdAt).toLocaleDateString('id-ID', {
                     day: 'numeric',
                     month: 'long',
                     year: 'numeric',
