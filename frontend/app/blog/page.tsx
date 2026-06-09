@@ -55,7 +55,7 @@ export default function Blog() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}>
-                <Link href={`/blog/${post.slug}`}>
+                <Link href={`/blogs/${post.slug}`}>
                   <div className='border border-gray-800 rounded-xl p-6 hover:bg-gray-600 transition-colors group cursor-pointer'>
                     <div className='flex justify-between items-start flex-wrap gap-2 mb-3'>
                       <span className='text-gray-500 text-sm'>
