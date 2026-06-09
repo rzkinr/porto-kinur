@@ -167,10 +167,3 @@ export async function adminGetMessages(): Promise<Contact[]> {
   const json = await res.json();
   return json.data || [];
 }
-
-export async function getBlogBySlug(slug: string): Promise<Blog | null> {
-  const res = await fetch(`${API_URL}/blogs/${slug}`, { cache: 'no-store' });
-  if (!res.ok) return null;
-  const json = await res.json();
-  return json.data || null;
-}
