@@ -27,7 +27,7 @@ export interface Contact {
   name: string;
   email: string;
   message: string;
-  created_at: string;
+  createdAt: string;
 }
 
 //projects
@@ -65,7 +65,7 @@ export interface ContactPayload {
 }
 //contact
 export async function sendContact(contact: ContactPayload): Promise<boolean> {
-  const res = await fetch(`${API_URL}/contacts`, {
+  const res = await fetch(`${API_URL}/contact`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(contact),

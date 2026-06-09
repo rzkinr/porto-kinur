@@ -20,10 +20,10 @@ func SetupRoutes(r *gin.Engine) {
 	{
 		//public routes
 		api.POST("/login", handlers.Login)
-		api.GET("/project", handlers.GetProjects)
-		api.GET("/project/:id", handlers.GetProjectByID)
-		api.GET("/blog", handlers.GetBlogs)
-		api.GET("/blog/:slug", handlers.GetBlogBySlug)
+		api.GET("/projects", handlers.GetProjects)
+		api.GET("/projects/:id", handlers.GetProjectByID)
+		api.GET("/blogs", handlers.GetBlogs)
+		api.GET("/blogs/:slug", handlers.GetBlogBySlug)
 		api.POST("/contact", handlers.CreateContact)
 
 		admin := api.Group("/admin")
