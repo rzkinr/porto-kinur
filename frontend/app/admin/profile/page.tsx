@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getProfile, adminUpserProfile } from '../../lib/api';
+import { getProfile, adminUpserProfile } from '../../../lib/api';
 
 const emptyForm = {
   bio1: '',

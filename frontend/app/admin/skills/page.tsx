@@ -7,7 +7,7 @@ import {
   adminUpdateSkills,
   adminDeleteSkill,
   type Skill,
-} from '../../lib/api';
+} from '../../../lib/api';
 
 const emptyForm = { category: '', items: '', order: 0 };
 

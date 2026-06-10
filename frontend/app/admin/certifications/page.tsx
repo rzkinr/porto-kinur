@@ -7,7 +7,7 @@ import {
   adminUpdateCertification,
   adminDeleteCertification,
   type Certification,
-} from '../../lib/api';
+} from '../../../lib/api';
 
 const emptyForm = { name: '', issuer: '', year: '', cert_id: '' };
 
