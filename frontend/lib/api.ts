@@ -32,6 +32,34 @@ export interface Contact {
   createdAt: string;
 }
 
+export interface Profile {
+  id: number;
+  bio1: string;
+  bio2: string;
+  tagline: string;
+  location: string;
+  email: string;
+  github: string;
+  linkedin: string;
+  updatedAt: string;
+}
+
+export interface Skill {
+  id: number;
+  category: string;
+  items: string;
+  order: number;
+}
+
+export interface Certification {
+  id: number;
+  name: string;
+  issuer: string;
+  year: string;
+  cert_id: string;
+  createdAt: string;
+}
+
 //projects
 export async function getProjects(): Promise<Project[]> {
   const res = await fetch(`${API_URL}/projects`, { cache: 'no-store' });
@@ -169,4 +197,96 @@ export async function adminGetMessages(): Promise<Contact[]> {
   if (!res.ok) return [];
   const json = await res.json();
   return json.data || [];
+}
+
+export async function getProfile(): Promise<Profile | null> {
+  const res = await fetch(`${API_URL}/profile`, { cache: 'no-store' });
+  if (!res.ok) return null;
+  const json = await res.json();
+  return json.data || null;
+}
+
+export async function getSkills(): Promise<Skill[]> {
+  const res = await fetch(`${API_URL}/skills`, { cache: 'no-store' });
+  const json = await res.json();
+  return json.data || [];
+}
+
+export async function getCertifications(): Promise<Certification[]> {
+  const res = await fetch(`${API_URL}/certifications`, { cache: 'no-store' });
+  const json = await res.json();
+  return json.data || [];
+}
+
+export async function adminUpserProfile(
+  data: Partial<Profile>,
+): Promise<boolean> {
+  const res = await fetch(`${API_URL}/admin/profile`, {
+    method: 'PUT',
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  return res.ok;
+}
+
+export async function adminCreateSkill(
+  data: Omit<Skill, 'id'>,
+): Promise<boolean> {
+  const res = await fetch(`${API_URL}/admin/skills`, {
+    method: 'POST',
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  return res.ok;
+}
+
+export async function adminUpdateSkills(
+  id: number,
+  data: Partial<Skill>,
+): Promise<boolean> {
+  const res = await fetch(`${API_URL}/admin/skills/${id}`, {
+    method: 'PUT',
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  return res.ok;
+}
+
+export async function adminDeleteSkill(id: number): Promise<boolean> {
+  const res = await fetch(`${API_URL}/admin/skills/${id}`, {
+    method: 'DELETE',
+    headers: authHeaders(),
+  });
+  return res.ok;
+}
+
+export async function adminCreateCertification(
+  data: Omit<Certification, 'id' | 'createdAt'>,
+): Promise<boolean> {
+  const res = await fetch(`${API_URL}/admin/certifications`, {
+    method: 'POST',
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  return res.ok;
+}
+
+export async function adminUpdateCertification(
+  id: number,
+  data: Partial<Certification>,
+): Promise<boolean> {
+  const res = await fetch(`${API_URL}/admin/certifications/${id}`, {
+    method: 'PUT',
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  return res.ok;
+}
+
+export async function adminDeleteCertification(id: number): Promise<boolean> {
+  const res = await fetch(`${API_URL}/admin/certifications/${id}`, {
+    method: 'DELETE',
+    headers: authHeaders(),
+  });
+  return res.ok;
 }

@@ -8,6 +8,9 @@ import clsx from 'clsx';
 
 const navLinks = [
   { href: '/admin/dashboard', label: 'Dashboard' },
+  { href: '/admin/profile', label: 'Profile' },
+  { href: '/admin/skills', label: 'Skills' },
+  { href: '/admin/certifications', label: 'Certifications' },
   { href: '/admin/projects', label: 'Projects' },
   { href: '/admin/blog', label: 'Blogs' },
   { href: '/admin/messages', label: 'Messages' },
