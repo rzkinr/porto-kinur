@@ -1,8 +1,17 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import {
+  getProfile,
+  getSkills,
+  getCertifications,
+  type Profile,
+  type Skill,
+  type Certification,
+} from '@/lib/api';
 
-const experience = [
+const defaultExperiences = [
   {
     role: 'IT Support & GA',
     company: 'CV Sukses Jaya Abadi',
@@ -29,7 +38,7 @@ const experience = [
   },
 ];
 
-const education = [
+const defaultEducation = [
   {
     degree: 'Sistem Informasi',
     school: 'Universitas Terbuka',
@@ -43,15 +52,22 @@ const education = [
   },
 ];
 
-const skills = {
-  'Languages': ['HTML', 'CSS', 'PHP', 'JavaScript', 'Python', 'Go'],
-  'Frontend': ['React', 'Next.js', 'Tailwind CSS'],
-  'Backend': ['Node.js', 'CodeIgniter', 'REST API'],
-  'Database': ['MySQL', 'PostgreSQL'],
-  'Tools & Infra': ['Fortinet', 'LAN/WiFi', 'CCTV', 'Git', 'Linux'],
-};
-
 export default function About() {
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [skills, setSkills] = useState<Skill[]>([]);
+  const [certifications, setCertifications] = useState<Certification[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([getProfile(), getSkills(), getCertifications()])
+      .then(([p, s, c]) => {
+        setProfile(p);
+        setSkills(s);
+        setCertifications(c);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <section className='min-h-screen px-6 pt-32 pb-20'>
       <div className='max-w-5xl mx-auto space-y-16'>
@@ -64,64 +80,84 @@ export default function About() {
           <p className='text-xs text-gray-500 uppercase tracking-widest'>
             About Me
           </p>
-          <h1 className='text-4xl font-bold text-white'>Who I am</h1>
-          <p className='text-gray-400 text-lg max-w-2xl leading-relaxed'>
-            Saya Rizki Nur Rokhim, developer asal Magetan, Indonesia. Lulusan
-            Diploma Teknologi Informasi Universitas Brawijaya (IPK 3.7) dan
-            sedang melanjutkan studi Sistem Informasi di Universitas Terbuka.
-          </p>
-          <p className='text-gray-400 text-lg max-w-2xl leading-relaxed'>
-            Memiliki pengalaman di bidang IT Support, pengembangan web, dan
-            otomasi. Saat ini sedang mendalami Golang dan backend architecture
-            untuk memperluas kemampuan sebagai full-stack developer.
-          </p>
+          <h1 className='text-4xl font-bold text-white'>Who I Am</h1>
+          {loading ?
+            <div className='space-y-2 animate-pulse'>
+              <div className='h-4 bg-gray-800 rounded w-full' />
+              <div className='h-4 bg-gray-800 rounded w-3/4' />
+            </div>
+          : <>
+              <p className='text-gray-400 text-lg max-w-2xl leading-relaxed'>
+                {profile?.bio1 ||
+                  'Saya Rizki Nur Rokhim, developer asal Magetan, Indonesia. Lulusan Diploma Teknologi Informasi Universitas Brawijaya (IPK 3.7) dan sedang melanjutkan studi Sistem Informasi di Universitas Terbuka.'}
+              </p>
+              <p className='text-gray-400 text-lg max-w-2xl leading-relaxed'>
+                {profile?.bio2 ||
+                  'Berpengalaman di bidang web development, mobile development, dan IT Support. Saat ini fokus mendalami Golang dan backend architecture.'}
+              </p>
+            </>
+          }
         </motion.div>
 
         {/* Skills */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
           className='space-y-6'>
           <h2 className='text-2xl font-semibold text-white'>Skills</h2>
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-            {Object.entries(skills).map(([category, items]) => (
-              <div key={category} className='space-y-3'>
-                <p className='text-sm text-blue-400 font-medium'>{category}</p>
-                <div className='flex flex-wrap gap-2'>
-                  {items.map((item) => (
-                    <span
-                      key={item}
-                      className='px-3 py-1 text-sm bg-gray-800 text-gray-300 rounded-md border border-gray-700'>
-                      {item}
-                    </span>
-                  ))}
+          {loading ?
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-6 animate-pulse'>
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className='space-y-2'>
+                  <div className='h-4 bg-gray-800 rounded w-1/3' />
+                  <div className='h-4 bg-gray-800 rounded w-full' />
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          : skills.length === 0 ?
+            <p className='text-gray-500'>Belum ada skill.</p>
+          : <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+              {skills.map((skill) => (
+                <div key={skill.id} className='space-y-3'>
+                  <p className='text-sm text-blue-400 font-medium'>
+                    {skill.category}
+                  </p>
+                  <div className='flex flex-wrap gap-2'>
+                    {skill.items.split(',').map((item) => (
+                      <span
+                        key={item}
+                        className='px-3 py-1 text-sm bg-gray-800 text-gray-300 rounded-md border border-gray-700'>
+                        {item.trim()}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          }
         </motion.div>
 
         {/* Experience */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className='space-y-6'>
           <h2 className='text-2xl font-semibold text-white'>Experience</h2>
           <div className='space-y-4'>
-            {experience.map((exp, i) => (
+            {defaultExperiences.map((exp, i) => (
               <div
                 key={i}
-                className='border border-gray-800 rounded-xl p-6 hover:bordergray-600 transition-colors'>
+                className='border border-gray-800 rounded-xl p-6 hover:border-gray-600 transition-colors'>
                 <div className='flex justify-between items-start flex-wrap gap-2'>
                   <div>
-                    <h3 className='text-white font semibold'>{exp.role}</h3>
+                    <h3 className='text-white font-semibold'>{exp.role}</h3>
                     <p className='text-blue-400 text-sm'>{exp.company}</p>
                   </div>
                   <span className='text-gray-500 text-sm'>{exp.period}</span>
                 </div>
-                <p className='text-gray-400 mt-3 text-sm leading-relaxed'>
+                <p className='text-gray-400 text-sm mt-3 leading-relaxed'>
                   {exp.desc}
                 </p>
               </div>
@@ -133,17 +169,17 @@ export default function About() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
           className='space-y-6'>
           <h2 className='text-2xl font-semibold text-white'>Education</h2>
           <div className='space-y-4'>
-            {education.map((edu, i) => (
+            {defaultEducation.map((edu, i) => (
               <div
                 key={i}
-                className='border border-gray-800 rounded-xl p-6 hover:border-gray 600 transition-colors'>
+                className='border border-gray-800 rounded-xl p-6 hover:border-gray-600 transition-colors'>
                 <div className='flex justify-between items-start flex-wrap gap-2'>
                   <div>
-                    <h3 className='text-white font semibold'>{edu.degree}</h3>
+                    <h3 className='text-white font-semibold'>{edu.degree}</h3>
                     <p className='text-blue-400 text-sm'>{edu.school}</p>
                   </div>
                   <div className='text-right'>
@@ -151,7 +187,7 @@ export default function About() {
                       {edu.period}
                     </span>
                     {edu.gpa && (
-                      <p className='text-gray-500 text-sm mt-1'>{edu.gpa}</p>
+                      <span className='text-green-400 text-sm'>{edu.gpa}</span>
                     )}
                   </div>
                 </div>
@@ -160,39 +196,39 @@ export default function About() {
           </div>
         </motion.div>
 
-        {/* Certificates */}
+        {/* Certifications */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
           className='space-y-6'>
-          <h2 className='text-2xl font-semibold text-white'>Certificates</h2>
-          <div className='space-y-6'>
-            {[
-              {
-                name: 'Belajar Dasar Pemrograman JavaScript',
-                issuer: 'Dicoding',
-                year: '2025',
-                id: 'MRZM6Q9GRPYQ',
-              },
-              {
-                name: 'Belajar Back-End Pemula dengan JavaScript',
-                issuer: 'Dicoding',
-                year: '2025',
-                id: 'RVZKG5J9OXD5',
-              },
-            ].map((cert, i) => (
-              <div
-                key={i}
-                className='flex justify-between items-center border border-gray-800 rounded-xl px-6 py-4 hover:border-gray-600 transition-colors'>
-                <h3 className='text-white text-sm font-medium'>{cert.name}</h3>
-                <p className='text-blue-400 text-xs mt-1'>
-                  {cert.issuer} · {cert.id}{' '}
-                </p>
-                <p className='text-gray-500 text-sm'>{cert.year}</p>
-              </div>
-            ))}
-          </div>
+          <h2 className='text-2xl font-semibold text-white'>Certifications</h2>
+          {loading ?
+            <div className='space-y-3 animate-pulse'>
+              {[1, 2].map((i) => (
+                <div key={i} className='h-12 bg-gray-800 rounded-xl' />
+              ))}
+            </div>
+          : certifications.length === 0 ?
+            <p className='text-gray-500'>Belum ada sertifikasi.</p>
+          : <div className='space-y-3'>
+              {certifications.map((cert) => (
+                <div
+                  key={cert.id}
+                  className='flex justify-between items-center border border-gray-800 rounded-xl px-6 py-4 hover:border-gray-600 transition-colors'>
+                  <div>
+                    <p className='text-white text-sm font-medium'>
+                      {cert.name}
+                    </p>
+                    <p className='text-blue-400 text-xs mt-1'>
+                      {cert.issuer} · {cert.cert_id}
+                    </p>
+                  </div>
+                  <span className='text-gray-500 text-sm'>{cert.year}</span>
+                </div>
+              ))}
+            </div>
+          }
         </motion.div>
       </div>
     </section>
