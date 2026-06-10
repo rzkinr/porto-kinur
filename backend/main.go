@@ -19,6 +19,9 @@ func main() {
 		&models.Blog{}, 
 		&models.Project{}, 
 		&models.Contact{},
+		&models.Profile{},
+		&models.Skill{},
+		&models.Certification{},
 	)
 
 	r := gin.Default()

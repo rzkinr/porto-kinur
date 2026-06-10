@@ -25,10 +25,23 @@ func SetupRoutes(r *gin.Engine) {
 		api.GET("/blogs", handlers.GetBlogs)
 		api.GET("/blogs/:slug", handlers.GetBlogBySlug)
 		api.POST("/contact", handlers.CreateContact)
+		api.GET("/profile", handlers.GetProfile)
+		api.GET("/skills", handlers.GetSkills)
+		api.GET("/certifications", handlers.GetCertifications)
 
 		admin := api.Group("/admin")
 		admin.Use(middleware.AuthMiddleware())
 		{
+			admin.PUT("/profile", handlers.UpdateProfile)
+			
+			admin.POST("/skills", handlers.CreateSkill)
+			admin.PUT("/skills/:id", handlers.UpdateSkill)
+			admin.DELETE("/skills/:id", handlers.DeleteSkill)
+
+			admin.POST("/certifications", handlers.CreateCertification)
+			admin.PUT("/certifications/:id", handlers.UpdateCertification)
+			admin.DELETE("/certifications/:id", handlers.DeleteCertification)
+			
 			//project routes
 			admin.POST("/projects", handlers.CreateProject)
 			admin.PUT("/projects/:id", handlers.UpdateProject)
