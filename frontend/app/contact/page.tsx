@@ -2,10 +2,16 @@
 
 import { motion } from 'framer-motion';
 import { ExternalLink, Mail, MapPin } from 'lucide-react';
-import { useState } from 'react';
-import { sendContact, type ContactPayload } from '@/lib/api';
+import { useState, useEffect } from 'react';
+import {
+  sendContact,
+  getProfile,
+  type ContactPayload,
+  Profile,
+} from '@/lib/api';
 
 export default function Contact() {
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [form, setForm] = useState<ContactPayload>({
     name: '',
     email: '',
@@ -14,6 +20,14 @@ export default function Contact() {
   const [status, setStatus] = useState<
     'idle' | 'loading' | 'success' | 'error'
   >();
+
+  useEffect(() => {
+    Promise.all([getProfile()])
+      .then(([p]) => {
+        setProfile(p);
+      })
+      .finally();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -74,7 +88,7 @@ export default function Contact() {
                 <a
                   href='mailto:rizkynurrokhim18@gmail.com'
                   className='text-gray-300 hover:text-white transition-colors'>
-                  rizkynurrokhim18@gmail.com
+                  {profile?.email || 'rizkynurrokhim18@gmail.com'}
                 </a>
               </div>
             </div>
@@ -87,7 +101,9 @@ export default function Contact() {
                 <p className='text-xs text-gray-500 uppercase tracking-widest mb-1'>
                   Location
                 </p>
-                <p className='text-gray-300'>Magetan, Indonesia</p>
+                <p className='text-gray-300'>
+                  {profile?.location || 'Magetan, Indonesia'}
+                </p>
               </div>
             </div>
 
@@ -100,11 +116,13 @@ export default function Contact() {
                   LinkedIn
                 </p>
                 <a
-                  href='https://www.linkedin.com/in/rizkinr/'
+                  href={
+                    profile?.linkedin || 'https://www.linkedin.com/in/rizkinr/'
+                  }
                   target='_blank'
                   rel='noopener noreferrer'
                   className='text-gray-300 hover:text-white transition-colors'>
-                  linkedin.com/in/rizkinr
+                  {profile?.linkedin || 'linkedin.com/in/rizkinr'}
                 </a>
               </div>
             </div>
@@ -118,11 +136,11 @@ export default function Contact() {
                   GitHub
                 </p>
                 <a
-                  href='https://github.com/rzkinr'
+                  href={profile?.github || 'https://github.com/rzkinr'}
                   target='_blank'
                   rel='noopener noreferrer'
                   className='text-gray-300 hover:text-white transition-colors'>
-                  github.com/rzkinr
+                  {profile?.github || 'github.com/rzkinr'}
                 </a>
               </div>
             </div>

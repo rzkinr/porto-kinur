@@ -9,7 +9,7 @@ import {
   type Skill,
 } from '../../../lib/api';
 
-const emptyForm = { category: '', items: '', order: 0 };
+const emptyForm = { category: '', items: '', sort_order: 0 };
 
 export default function AdminSkills() {
   const [skills, setSkills] = useState<Skill[]>([]);
@@ -24,10 +24,12 @@ export default function AdminSkills() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(editId, form);
     if (editId) {
       await adminUpdateSkills(editId, form);
     } else {
       await adminCreateSkill(form);
+      console.log(form);
     }
     setForm(emptyForm);
     setEditId(null);
@@ -36,7 +38,7 @@ export default function AdminSkills() {
   };
 
   const handleEdit = (s: Skill) => {
-    setForm({ category: s.category, items: s.items, order: s.order });
+    setForm({ category: s.category, items: s.items, sort_order: s.sort_order });
     setEditId(s.id);
     setShowForm(true);
   };
@@ -86,11 +88,11 @@ export default function AdminSkills() {
             />
             <input
               type='number'
-              placeholder='Order (1, 2, 3....)'
-              name='order'
-              value={form.order}
+              placeholder='Sort Order (1, 2, 3....)'
+              name='sort_order'
+              value={form.sort_order}
               onChange={(e) =>
-                setForm({ ...form, order: Number(e.target.value) })
+                setForm({ ...form, sort_order: Number(e.target.value) })
               }
               className='w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-gray-100 text-sm focus:outline-none foucus:border-blue-500'
             />

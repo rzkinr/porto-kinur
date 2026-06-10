@@ -88,10 +88,6 @@ export default function About() {
             </div>
           : <>
               <p className='text-gray-400 text-lg max-w-2xl leading-relaxed'>
-                {profile?.bio1 ||
-                  'Saya Rizki Nur Rokhim, developer asal Magetan, Indonesia. Lulusan Diploma Teknologi Informasi Universitas Brawijaya (IPK 3.7) dan sedang melanjutkan studi Sistem Informasi di Universitas Terbuka.'}
-              </p>
-              <p className='text-gray-400 text-lg max-w-2xl leading-relaxed'>
                 {profile?.bio2 ||
                   'Berpengalaman di bidang web development, mobile development, dan IT Support. Saat ini fokus mendalami Golang dan backend architecture.'}
               </p>

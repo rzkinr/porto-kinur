@@ -10,7 +10,7 @@ import (
 
 func GetSkills(c *gin.Context) {
 	var skills []models.Skill
-	config.DB.Order("order asc").Find(&skills)
+	config.DB.Order("sort_order asc").Find(&skills)
 	c.JSON(http.StatusOK, gin.H{"data": skills})
 }
 
@@ -30,7 +30,7 @@ func UpdateSkill(c *gin.Context) {
 	id := c.Param("id")
 	var skill models.Skill
 
-	if err := config.DB.First(&skill, id); err != nil {
+	if err := config.DB.First(&skill, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Skill not found"})
 		return
 	}
@@ -46,7 +46,7 @@ func UpdateSkill(c *gin.Context) {
 
 func DeleteSkill(c *gin.Context) {
 	id := c.Param("id")
-	if err := config.DB.Delete(&models.Skill{}, id); err != nil {
+	if err := config.DB.Delete(&models.Skill{}, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Skill not found"})
 		return
 	}

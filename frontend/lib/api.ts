@@ -48,7 +48,7 @@ export interface Skill {
   id: number;
   category: string;
   items: string;
-  order: number;
+  sort_order: number;
 }
 
 export interface Certification {

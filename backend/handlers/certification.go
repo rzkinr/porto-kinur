@@ -10,7 +10,7 @@ import (
 
 func GetCertifications(c *gin.Context) {
 	var certifications []models.Certification
-	config.DB.Order("order asc").Find(&certifications)
+	config.DB.Order("created_at asc").Find(&certifications)
 	c.JSON(http.StatusOK, gin.H{"data": certifications})
 }
 
@@ -30,7 +30,7 @@ func UpdateCertification(c *gin.Context) {
 	id := c.Param("id")
 	var certification models.Certification
 
-	if err := config.DB.First(&certification, id); err != nil {
+	if err := config.DB.First(&certification, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Certification not found"})
 		return
 	}
@@ -46,7 +46,7 @@ func UpdateCertification(c *gin.Context) {
 
 func DeleteCertification(c *gin.Context) {
 	id := c.Param("id")
-	if err := config.DB.Delete(&models.Certification{}, id); err != nil {
+	if err := config.DB.Delete(&models.Certification{}, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Certification not found"})
 		return
 	}
