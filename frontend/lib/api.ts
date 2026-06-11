@@ -21,6 +21,7 @@ export interface Blog {
   content: string;
   tags: string;
   read_time: string;
+  views: number;
   createdAt: string;
 }
 

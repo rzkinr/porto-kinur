@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { getBlogs, type Blog } from '@/lib/api';
+import { Eye } from 'lucide-react';
 
 export default function Blog() {
   const [posts, setPosts] = useState<Blog[]>([]);
@@ -67,6 +68,9 @@ export default function Blog() {
                       </span>
                       <span className='text-gray-500 text-sm'>
                         {post.read_time} min read
+                      </span>
+                      <span className='flex items-center gap-1 text-gray-500 text-sm'>
+                        <Eye size={14} /> {post.views} views
                       </span>
                     </div>
 

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Eye } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { getBlogBySlug, type Blog } from '@/lib/api';
 
@@ -92,6 +92,9 @@ export default function BlogDetail() {
             {post.read_time && (
               <span className='text-gray-500 text-sm'>{post.read_time}</span>
             )}
+            <span className='flex items-center gap-1 text-gray-500 text-sm'>
+              <Eye size={14} /> {post.views} views
+            </span>
           </div>
         </motion.div>
 

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
+import ThemeToggle from './ThemeToggle';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -23,7 +24,7 @@ export default function Navbar() {
           className='font-semibold text-white tracking-tight text-lg'>
           kinur<span className='text-blue-400'>.</span>dev
         </Link>
-        <ul className='flex gap-6 text-sm'>
+        <ul className='flex gap-6 text-sm items-center'>
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
@@ -38,6 +39,9 @@ export default function Navbar() {
               </Link>
             </li>
           ))}
+          <li>
+            <ThemeToggle />
+          </li>
         </ul>
       </div>
     </nav>

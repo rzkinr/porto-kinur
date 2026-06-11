@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, GitBranch } from 'lucide-react';
+import { ExternalLink, GitBranch, Search } from 'lucide-react';
 import { getProjects, type Project } from '@/lib/api';
 
 const statusColors: Record<string, string> = {
@@ -13,12 +13,40 @@ const statusColors: Record<string, string> = {
 export default function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [selectedTech, setSelectedTech] = useState<string | null>(null);
 
   useEffect(() => {
     getProjects()
       .then(setProjects)
       .finally(() => setLoading(false));
   }, []);
+
+  //ambil semua tech yang unik dari projects
+  const allTech = useMemo(() => {
+    const techSet = new Set<string>();
+    projects.forEach((project) => {
+      project.tech.split(',').forEach((tech) => techSet.add(tech.trim()));
+    });
+    return Array.from(techSet).sort();
+  }, [projects]);
+
+  //filter projects berdasarkan search dan selectedTech
+  const filteredProjects = useMemo(() => {
+    return projects.filter((p) => {
+      const matchesSearch =
+        p.title.toLowerCase().includes(search.toLowerCase()) ||
+        p.description.toLowerCase().includes(search.toLowerCase());
+      const matchesTech =
+        selectedTech ?
+          p.tech
+            .split(',')
+            .map((t) => t.trim())
+            .includes(selectedTech)
+        : true;
+      return matchesSearch && matchesTech;
+    });
+  }, [projects, search, selectedTech]);
 
   return (
     <section className='min-h-screen px-6 pt-32 pb-20'>
@@ -39,6 +67,55 @@ export default function Projects() {
           </p>
         </motion.div>
 
+        {/* Search & Filter */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.05 }}
+          className='space-y-4'>
+          <div className='relative'>
+            <Search
+              size={16}
+              className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-500'
+            />
+            <input
+              type='text'
+              placeholder='Cari project...'
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className='w-full bg-gray-800 border border-gray-700 rounded-lg pl-10 pr-4 py-2.5 text-gray-100 text-sm placeholder-gray-500 focus:outline-none focus:border-blue-500'
+            />
+          </div>
+
+          {allTech.length > 0 && (
+            <div className='flex flex-wrap gap-2'>
+              <button
+                onClick={() => setSelectedTech(null)}
+                className={`px-3 py-1.5 text-xs rounded-full border transition-colors ${
+                  !selectedTech ?
+                    'bg-blue-500 text-white border-blue-500'
+                  : 'bg-gray-800 text-gray-400 border-gray-700 hover:border-gray-500'
+                }`}>
+                All
+              </button>
+              {allTech.map((tech) => (
+                <button
+                  key={tech}
+                  onClick={() =>
+                    setSelectedTech(tech === selectedTech ? null : tech)
+                  }
+                  className={`px-3 py-1.5 text-xs rounded-full border transition-colors ${
+                    selectedTech === tech ?
+                      'bg-blue-500 text-white border-blue-500'
+                    : 'bg-gray-800 text-gray-400 border-gray-700 hover:border-gray-500'
+                  }`}>
+                  {tech}
+                </button>
+              ))}
+            </div>
+          )}
+        </motion.div>
+
         {loading ?
           <div className='space-y-4'>
             {[1, 2, 3].map((i) => (
@@ -51,10 +128,10 @@ export default function Projects() {
               </div>
             ))}
           </div>
-        : projects.length === 0 ?
+        : filteredProjects.length === 0 ?
           <p className='text-gray-400'>No projects found.</p>
         : <div className='grid grid-cols-1 gap-6'>
-            {projects.map((project, index) => (
+            {filteredProjects.map((project, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
