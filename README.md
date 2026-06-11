@@ -54,10 +54,12 @@ Personal portfolio website full-stack dengan Next.js (frontend) dan Golang (back
 
 ## Architecture
 
-┌─────────────┐ ┌──────────────┐ ┌─────────────┐
-│ Next.js │ ──────▶ │ Golang API │ ──────▶ │ PostgreSQL │
-│ (Vercel) │ HTTPS │ (VPS+Nginx) │ │ (VPS) │
-└─────────────┘ └──────────────┘ └─────────────┘
+<!-- prettier-ignore-start -->
+┌─────────────┐         ┌──────────────┐         ┌─────────────┐
+│ Next.js     │ ──────▶ │ Golang API   │ ──────▶ │ PostgreSQL  │
+│ (Vercel)    │ HTTPS   │ (VPS+Nginx)  │         │ (VPS)       │
+└─────────────┘         └──────────────┘         └─────────────┘
+<!-- prettier-ignore-end -->
 
 ## Features
 
