@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"time"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/rzkinr/backend-porto/handlers"
@@ -18,6 +20,10 @@ func SetupRoutes(r *gin.Engine) {
 
 	api := r.Group("/api")
 	{
+		api.POST("/login", middleware.RateLimitMiddleware(5, time.Minute), handlers.Login)
+		api.POST("/contact", middleware.RateLimitMiddleware(3, time.Minute), handlers.CreateContact)
+
+
 		//public routess
 		api.POST("/login", handlers.Login)
 		api.GET("/projects", handlers.GetProjects)
