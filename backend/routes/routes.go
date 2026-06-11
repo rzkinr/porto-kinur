@@ -25,12 +25,10 @@ func SetupRoutes(r *gin.Engine) {
 
 
 		//public routess
-		api.POST("/login", handlers.Login)
 		api.GET("/projects", handlers.GetProjects)
 		api.GET("/projects/:id", handlers.GetProjectByID)
 		api.GET("/blogs", handlers.GetBlogs)
 		api.GET("/blogs/:slug", handlers.GetBlogBySlug)
-		api.POST("/contact", handlers.CreateContact)
 		api.GET("/profile", handlers.GetProfile)
 		api.GET("/skills", handlers.GetSkills)
 		api.GET("/certifications", handlers.GetCertifications)
