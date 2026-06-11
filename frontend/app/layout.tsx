@@ -21,9 +21,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Rizki Nur Rokhim' }],
   openGraph: {
-    title: 'Rizki Nur Rokhim — Full-Stack Developer',
+    title: 'Rizki Nur Rokhim — Junior Full-Stack Developer',
     description:
-      'Portfolio Rizki Nur Rokhim, full-stack developer dari Magetan, Indonesia.',
+      'Portfolio Rizki Nur Rokhim, junior full-stack developer dari Magetan, Indonesia.',
     url: 'https://kinur.my.id',
     siteName: 'kinur.dev',
     images: [
@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Rizki Nur Rokhim — Full-Stack Developer',
+    title: 'Rizki Nur Rokhim — Junior Full-Stack Developer',
     description:
-      'Portfolio Rizki Nur Rokhim, full-stack developer dari Magetan, Indonesia.',
+      'Portfolio Rizki Nur Rokhim, junior full-stack developer dari Magetan, Indonesia.',
     images: ['https://kinur.my.id/og-image.png'],
   },
 };
