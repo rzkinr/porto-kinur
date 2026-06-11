@@ -27,6 +27,14 @@ func GetBlogBySlug(c *gin.Context) {
 		return
 	}
 
+	//increament view count
+	config.DB.NewUpdate().Model((*models.Blog)(nil)).
+		Set("views = views + 1").
+		Where("slug = ?", slug).
+		Exec(context.Background())
+	
+	blog.Views++ // reflect the incremented view count in the response
+
 	c.JSON(http.StatusOK, gin.H{"data": blog})
 }
 
