@@ -10,6 +10,7 @@ import {
   type Skill,
   type Certification,
 } from '@/lib/api';
+import { Download } from 'lucide-react';
 
 const defaultExperiences = [
   {
@@ -94,6 +95,16 @@ export default function About() {
             </>
           }
         </motion.div>
+
+        <motion.a
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.05 }}
+          href='/resume.pdf'
+          download='Rizki-Nur-Rokhim-CV.pdf'
+          className='inline-flex items-center gap-2 bg-blue-400 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors w-fit'>
+          <Download size={16} /> Lihat CV
+        </motion.a>
 
         {/* Skills */}
         <motion.div
