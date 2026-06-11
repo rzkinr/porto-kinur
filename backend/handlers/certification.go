@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -10,19 +11,23 @@ import (
 
 func GetCertifications(c *gin.Context) {
 	var certifications []models.Certification
-	config.DB.Order("created_at asc").Find(&certifications)
+	if err := config.DB.NewSelect().Model(&certifications).OrderExpr("created_at ASC").Scan(context.Background()); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"data": certifications})
 }
 
 func CreateCertification(c *gin.Context) {
 	var input models.Certification
-
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	config.DB.Create(&input)
+	if _, err := config.DB.NewInsert().Model(&input).Exec(context.Background()); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"data": input})
 }
 
@@ -30,7 +35,7 @@ func UpdateCertification(c *gin.Context) {
 	id := c.Param("id")
 	var certification models.Certification
 
-	if err := config.DB.First(&certification, id).Error; err != nil {
+	if err := config.DB.NewSelect().Model(&certification).Where("id = ?", id).Scan(context.Background()); err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Certification not found"})
 		return
 	}
@@ -40,13 +45,16 @@ func UpdateCertification(c *gin.Context) {
 		return
 	}
 
-	config.DB.Save(&certification)
+	if _, err := config.DB.NewUpdate().Model(&certification).WherePK().Exec(context.Background()); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"data": certification})
 }
 
 func DeleteCertification(c *gin.Context) {
 	id := c.Param("id")
-	if err := config.DB.Delete(&models.Certification{}, id).Error; err != nil {
+	if _, err := config.DB.NewDelete().Model((*models.Certification)(nil)).Where("id = ?", id).Exec(context.Background()); err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Certification not found"})
 		return
 	}

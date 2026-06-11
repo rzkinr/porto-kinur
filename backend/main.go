@@ -1,28 +1,38 @@
 package main
 
 import (
+	"context"
 	"log"
 	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/rzkinr/backend-porto/config"
-	"github.com/rzkinr/backend-porto/models"
+	"github.com/rzkinr/backend-porto/migrations"
 	"github.com/rzkinr/backend-porto/routes"
+	"github.com/uptrace/bun/migrate"
 )
 
 func main() {
 	godotenv.Load()
 	config.ConnectDatabase()
 
-	config.DB.AutoMigrate(
-		&models.Blog{}, 
-		&models.Project{}, 
-		&models.Contact{},
-		&models.Profile{},
-		&models.Skill{},
-		&models.Certification{},
-	)
+	// Run migrations
+	migrator := migrate.NewMigrator(config.DB, migrations.Migrations)
+	if err := migrator.Init(context.Background()); err != nil {
+		log.Fatal("Failed to init migrator:", err)
+	}
+
+	group, err := migrator.Migrate(context.Background())
+	if err != nil {
+		log.Fatal("Failed to run migrations:", err)
+	}
+
+	if group.IsZero() {
+		log.Println("No new migrations to run")
+	} else {
+		log.Printf("Migrated to %s", group)
+	}
 
 	r := gin.Default()
 	routes.SetupRoutes(r)
@@ -32,7 +42,6 @@ func main() {
 		port = "8080"
 	}
 
-	// Log the server start message with the port number
 	log.Printf("Server running on port %s", port)
 	r.Run(":" + port)
 }

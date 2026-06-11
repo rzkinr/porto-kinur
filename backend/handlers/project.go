@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"context"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rzkinr/backend-porto/config"
@@ -16,32 +18,37 @@ func CreateProject(c *gin.Context) {
 		return
 	}
 
-	config.DB.Create(&input)	
+	if _, err := config.DB.NewInsert().Model(&input).Exec(context.Background()); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"data": input})
 }
 
 func UpdateProject(c *gin.Context) {
-	id := c.Param("id")
+	id, _ := strconv.ParseInt(c.Param("id"), 10, 64)
 	var project models.Project
 
-	if err := config.DB.First(&project, id).Error; err != nil {
+	if err := config.DB.NewSelect().Model(&project).Where("id = ?", id).Scan(context.Background()); err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Project not found"})
 		return
 	}
-
 	if err := c.ShouldBindJSON(&project); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	
-	config.DB.Save(&project)
+	project.ID = id
+	if _, err := config.DB.NewUpdate().Model(&project).WherePK().Exec(context.Background()); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"data": project})
 }
 
 func DeleteProject(c *gin.Context) {
-	id := c.Param("id")
-	if err := config.DB.Delete(&models.Project{}, id).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Project not found"})
+	id, _ := strconv.ParseInt(c.Param("id"), 10, 64)
+	if _, err := config.DB.NewDelete().Model((*models.Project)(nil)).Where("id = ?", id).Exec(context.Background()); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Project deleted"})
@@ -49,18 +56,20 @@ func DeleteProject(c *gin.Context) {
 
 func GetProjects(c *gin.Context) {
 	var projects []models.Project
-	config.DB.Order("created_at desc").Find(&projects)
+	if err := config.DB.NewSelect().Model(&projects).OrderExpr("created_at DESC").Scan(context.Background()); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"data": projects})
 }
 
 func GetProjectByID(c *gin.Context) {
-	id:= c.Param("id")
+	id, _ := strconv.ParseInt(c.Param("id"), 10, 64)
 	var project models.Project
 
-	if err := config.DB.First(&project, id).Error; err != nil {
+	if err := config.DB.NewSelect().Model(&project).Where("id = ?", id).Scan(context.Background()); err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Project not found"})
 		return
 	}
-
 	c.JSON(http.StatusOK, gin.H{"data": project})
 }

@@ -1,14 +1,20 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"github.com/uptrace/bun"
+)
 
 type Blog struct {
-	ID          uint      `gorm:"primaryKey" json:"id"`
-	Title       string    `json:"title"`
-	Slug		string    `json:"slug"`
-	Excerpt     string    `json:"excerpt"`
-	Content     string    `json:"content"`
-	Tags        string    `json:"tags"`
-	ReadTime    string    `json:"read_time"` 
-	CreatedAt   time.Time `json:"created_at"`
+	bun.BaseModel `bun:"table:blogs,alias:b"`
+
+	ID          int64     `bun:"id,pk,autoincrement" json:"id"`
+	Title       string    `bun:"title,notnull" json:"title"`
+	Slug		string    `bun:"slug,notnull" json:"slug"`
+	Excerpt     string    `bun:"excerpt" json:"excerpt"`
+	Content     string    `bun:"content" json:"content"`
+	Tags        string    `bun:"tags" json:"tags"`
+	ReadTime    string    `bun:"read_time" json:"read_time"` 
+	CreatedAt   time.Time `bun:"created_at,notnull,nullzero,default:current_timestamp" json:"created_at"`
 }

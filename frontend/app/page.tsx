@@ -48,7 +48,7 @@ export default function Home() {
             {profile?.tagline || 'Fullstack Developer'}
           </h2>
           <p className='text-gray-400 text-lg max-w-xl leading-relaxed'>
-            {profile?.bio2 ||
+            {profile?.bio1 ||
               'Berpengalaman di bidang web development, mobile development, dan IT Support. Saat ini fokus mendalami Golang dan backend architecture.'}
           </p>
         </motion.div>

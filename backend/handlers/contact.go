@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -16,10 +17,8 @@ func CreateContact(c *gin.Context) {
 		return
 	}
 
-	result := config.DB.Create(&input)
-
-	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
+	if _, err := config.DB.NewInsert().Model(&input).Exec(context.Background()); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create contact"})
 		return
 	}
 
@@ -31,6 +30,9 @@ func CreateContact(c *gin.Context) {
 
 func GetContacts(c *gin.Context) {
 	var contacts []models.Contact
-	config.DB.Order("created_at desc").Find(&contacts)
+	if err := config.DB.NewSelect().Model(&contacts).OrderExpr("created_at DESC").Scan(context.Background()); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"data": contacts})
 }
