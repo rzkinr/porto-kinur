@@ -15,6 +15,7 @@ const emptyForm = {
   excerpt: '',
   content: '',
   tags: '',
+  views: 0,
   read_time: '',
 };
 
@@ -49,6 +50,7 @@ export default function AdminBlog() {
       excerpt: b.excerpt,
       content: b.content,
       tags: b.tags,
+      views: b.views,
       read_time: b.read_time,
     });
     setEditSlug(b.slug);

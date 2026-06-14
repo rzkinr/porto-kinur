@@ -162,7 +162,9 @@ export async function adminDeleteProject(id: number) {
 }
 
 //admin blogs
-export async function adminCreateBlog(blog: Omit<Blog, 'id' | 'createdAt'>) {
+export async function adminCreateBlog(
+  blog: Omit<Blog, 'id' | 'createdAt'>,
+): Promise<boolean> {
   const res = await fetch(`${API_URL}/admin/blogs`, {
     method: 'POST',
     headers: authHeaders(),
@@ -172,13 +174,13 @@ export async function adminCreateBlog(blog: Omit<Blog, 'id' | 'createdAt'>) {
 }
 
 export async function adminUpdateBlog(
-  id: string,
-  blog: Omit<Blog, 'id' | 'createdAt'>,
-) {
-  const res = await fetch(`${API_URL}/admin/blogs/${id}`, {
+  slug: string,
+  data: Partial<Blog>,
+): Promise<boolean> {
+  const res = await fetch(`${API_URL}/admin/blog/${slug}`, {
     method: 'PUT',
     headers: authHeaders(),
-    body: JSON.stringify(blog),
+    body: JSON.stringify(data),
   });
   return res.ok;
 }
