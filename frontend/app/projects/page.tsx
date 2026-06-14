@@ -162,7 +162,7 @@ export default function Projects() {
                     )}
                     {project.demo && (
                       <a
-                        href={`https://${project.demo}`}
+                        href={project.demo}
                         target='_blank'
                         rel='noopener noreferrer'
                         className='text-gray-400 hover:text-white transition-colors'>
