@@ -163,7 +163,7 @@ export async function adminDeleteProject(id: number) {
 
 //admin blogs
 export async function adminCreateBlog(
-  blog: Omit<Blog, 'id' | 'createdAt'>,
+  blog: Omit<Blog, 'id' | 'created_at'>,
 ): Promise<boolean> {
   const res = await fetch(`${API_URL}/admin/blogs`, {
     method: 'POST',
