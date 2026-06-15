@@ -57,11 +57,11 @@ export default function Projects() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className='space-y-4'>
-          <p className='text-xs text-gray-500 uppercase tracking-widest'>
+          <p className='text-xs text-gray-500 dark:text-gray-500 uppercase tracking-widest'>
             My Work
           </p>
-          <h1 className='text-4xl font-bold text-white'>Projects</h1>
-          <p className='text-gray-400 text-lg max-w-2xl leading-relaxed'>
+          <h1 className='text-4xl font-bold text-gray-900 dark:text-white'>Projects</h1>
+          <p className='text-gray-600 dark:text-gray-400 text-lg max-w-2xl leading-relaxed'>
             Beberapa project yang pernah saya kerjakan — dari automation bot
             sampai web development.
           </p>
@@ -76,14 +76,14 @@ export default function Projects() {
           <div className='relative'>
             <Search
               size={16}
-              className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-500'
+              className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-500'
             />
             <input
               type='text'
               placeholder='Cari project...'
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className='w-full bg-gray-800 border border-gray-700 rounded-lg pl-10 pr-4 py-2.5 text-gray-100 text-sm placeholder-gray-500 focus:outline-none focus:border-blue-500'
+              className='w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg pl-10 pr-4 py-2.5 text-gray-100 text-sm placeholder-gray-500 focus:outline-none focus:border-blue-500'
             />
           </div>
 
@@ -93,8 +93,8 @@ export default function Projects() {
                 onClick={() => setSelectedTech(null)}
                 className={`px-3 py-1.5 text-xs rounded-full border transition-colors ${
                   !selectedTech ?
-                    'bg-blue-500 text-white border-blue-500'
-                  : 'bg-gray-800 text-gray-400 border-gray-700 hover:border-gray-500'
+                    'bg-blue-500 text-gray-900 dark:text-white border-blue-500'
+                  : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-700 hover:border-gray-500'
                 }`}>
                 All
               </button>
@@ -106,8 +106,8 @@ export default function Projects() {
                   }
                   className={`px-3 py-1.5 text-xs rounded-full border transition-colors ${
                     selectedTech === tech ?
-                      'bg-blue-500 text-white border-blue-500'
-                    : 'bg-gray-800 text-gray-400 border-gray-700 hover:border-gray-500'
+                      'bg-blue-500 text-gray-900 dark:text-white border-blue-500'
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-700 hover:border-gray-500'
                   }`}>
                   {tech}
                 </button>
@@ -121,15 +121,15 @@ export default function Projects() {
             {[1, 2, 3].map((i) => (
               <div
                 key={i}
-                className='border border-gray-800 rounded-xl p-6 animate-pulse'>
-                <div className='h-5 bg-gray-800 rounded w-1/3 mb-3' />
-                <div className='h-4 bg-gray-800 rounded w-2/3 mb-2' />
-                <div className='h-4 bg-gray-800 rounded w-1/2' />
+                className='border border-gray-200 dark:border-gray-800 rounded-xl p-6 animate-pulse'>
+                <div className='h-5 bg-gray-100 dark:bg-gray-800 rounded w-1/3 mb-3' />
+                <div className='h-4 bg-gray-100 dark:bg-gray-800 rounded w-2/3 mb-2' />
+                <div className='h-4 bg-gray-100 dark:bg-gray-800 rounded w-1/2' />
               </div>
             ))}
           </div>
         : filteredProjects.length === 0 ?
-          <p className='text-gray-400'>No projects found.</p>
+          <p className='text-gray-600 dark:text-gray-400'>No projects found.</p>
         : <div className='grid grid-cols-1 gap-6'>
             {filteredProjects.map((project, index) => (
               <motion.div
@@ -137,10 +137,10 @@ export default function Projects() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className='border border-gray-800 rounded-xl p-6 hover:border-gray-600 transition-colors group'>
+                className='border border-gray-200 dark:border-gray-800 rounded-xl p-6 hover:border-gray-400 dark:border-gray-600 transition-colors group'>
                 <div className='flex justify-between items-start flex-wrap gap-3'>
                   <div className='space-y-1'>
-                    <h2 className='text-white font-semibold text-xl group-hover:text-blue-400 transition-colors'>
+                    <h2 className='text-gray-900 dark:text-white font-semibold text-xl group-hover:text-blue-600 dark:text-blue-400 transition-colors'>
                       {project.title}
                     </h2>
                     <span
@@ -156,7 +156,7 @@ export default function Projects() {
                         href={project.github}
                         target='_blank'
                         rel='noopener noreferrer'
-                        className='text-gray-400 hover:text-white transition-colors'>
+                        className='text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white transition-colors'>
                         <GitBranch size={18} />
                       </a>
                     )}
@@ -165,14 +165,14 @@ export default function Projects() {
                         href={project.demo}
                         target='_blank'
                         rel='noopener noreferrer'
-                        className='text-gray-400 hover:text-white transition-colors'>
+                        className='text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white transition-colors'>
                         <ExternalLink size={18} />
                       </a>
                     )}
                   </div>
                 </div>
 
-                <p className='text-gray-400 mt-4 text-sm leading-relaxed'>
+                <p className='text-gray-600 dark:text-gray-400 mt-4 text-sm leading-relaxed'>
                   {project.description}
                 </p>
 
@@ -180,7 +180,7 @@ export default function Projects() {
                   {project.tech.split(',').map((tech) => (
                     <span
                       key={tech}
-                      className='px-2 py-1 text-xs bg-gray-800 text-gray-300 rounded border border-gray-700'>
+                      className='px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded border border-gray-300 dark:border-gray-700'>
                       {tech}
                     </span>
                   ))}

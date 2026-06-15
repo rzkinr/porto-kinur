@@ -60,10 +60,10 @@ export default function Contact() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className='space-y-4'>
-          <p className='text-xs text-gray-500 uppercase tracking-widest'>
+          <p className='text-xs text-gray-500 dark:text-gray-500 uppercase tracking-widest'>
             Get in Touch
           </p>
-          <h1 className='text-4xl font-bold text-white'>Contact Us</h1>
+          <h1 className='text-4xl font-bold text-gray-900 dark:text-white'>Contact Us</h1>
           <p className='text-gray-600'>
             Punya pertanyaan, project, atau sekadar ingin ngobrol? Silakan kirim
             pesan — saya akan balas secepatnya.
@@ -78,41 +78,41 @@ export default function Contact() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className='space-y-6'>
             <div className='flex items-center gap-4'>
-              <div className='w-10 h-10 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center text-blue-400'>
+              <div className='w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 flex items-center justify-center text-blue-600 dark:text-blue-400'>
                 <Mail size={20} />
               </div>
               <div>
-                <p className='text-xs text-gray-500 uppercase tracking-widest mb-1'>
+                <p className='text-xs text-gray-500 dark:text-gray-500 uppercase tracking-widest mb-1'>
                   Email
                 </p>
                 <a
                   href='mailto:rizkynurrokhim18@gmail.com'
-                  className='text-gray-300 hover:text-white transition-colors'>
+                  className='text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white transition-colors'>
                   {profile?.email || 'rizkynurrokhim18@gmail.com'}
                 </a>
               </div>
             </div>
 
             <div className='flex items-center gap-4'>
-              <div className='w-10 h-10 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center text-blue-400'>
+              <div className='w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 flex items-center justify-center text-blue-600 dark:text-blue-400'>
                 <MapPin size={20} />
               </div>
               <div>
-                <p className='text-xs text-gray-500 uppercase tracking-widest mb-1'>
+                <p className='text-xs text-gray-500 dark:text-gray-500 uppercase tracking-widest mb-1'>
                   Location
                 </p>
-                <p className='text-gray-300'>
+                <p className='text-gray-700 dark:text-gray-300'>
                   {profile?.location || 'Magetan, Indonesia'}
                 </p>
               </div>
             </div>
 
             <div className='flex items-center gap-4'>
-              <div className='w-10 h-10 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center text-blue-400'>
+              <div className='w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 flex items-center justify-center text-blue-600 dark:text-blue-400'>
                 <ExternalLink size={20} />
               </div>
               <div>
-                <p className='text-xs text-gray-500 uppercase tracking-widest mb-1'>
+                <p className='text-xs text-gray-500 dark:text-gray-500 uppercase tracking-widest mb-1'>
                   LinkedIn
                 </p>
                 <a
@@ -121,25 +121,25 @@ export default function Contact() {
                   }
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='text-gray-300 hover:text-white transition-colors'>
+                  className='text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white transition-colors'>
                   {profile?.linkedin || 'linkedin.com/in/rizkinr'}
                 </a>
               </div>
             </div>
 
             <div className='flex items-center gap-4'>
-              <div className='w-10 h-10 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center text-blue-400'>
+              <div className='w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 flex items-center justify-center text-blue-600 dark:text-blue-400'>
                 <ExternalLink size={20} />
               </div>
               <div>
-                <p className='text-xs text-gray-500 uppercase tracking-widest mb-1'>
+                <p className='text-xs text-gray-500 dark:text-gray-500 uppercase tracking-widest mb-1'>
                   GitHub
                 </p>
                 <a
                   href={profile?.github || 'https://github.com/rzkinr'}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='text-gray-300 hover:text-white transition-colors'>
+                  className='text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white transition-colors'>
                   {profile?.github || 'github.com/rzkinr'}
                 </a>
               </div>
@@ -153,20 +153,20 @@ export default function Contact() {
             transition={{ duration: 0.5, delay: 0.2 }}>
             <form onSubmit={handleSubmit} className='space-y-4'>
               <div className='space-y-1'>
-                <label className='text-sm text-gray-400'>Name</label>
+                <label className='text-sm text-gray-600 dark:text-gray-400'>Name</label>
                 <input
                   type='text'
                   name='name'
                   value={form.name}
                   onChange={handleChange}
                   required
-                  className='w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-gray-100 placeholder-gray-500 focus:outline-none transition-colors text-sm'
+                  className='w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none transition-colors text-sm'
                   placeholder='Your Name'
                 />
               </div>
 
               <div className='space-y-1'>
-                <label className='text-sm text-gray-400'>Email</label>
+                <label className='text-sm text-gray-600 dark:text-gray-400'>Email</label>
                 <input
                   type='email'
                   name='email'
@@ -174,19 +174,19 @@ export default function Contact() {
                   onChange={handleChange}
                   placeholder='your@gmail.com'
                   required
-                  className='w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-gray-100 placeholder-gray-500 focus:outline-none transition-colors text-sm'
+                  className='w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none transition-colors text-sm'
                 />
               </div>
 
               <div className='space-y-1'>
-                <label className='text-sm text-gray-400'>Message</label>
+                <label className='text-sm text-gray-600 dark:text-gray-400'>Message</label>
                 <textarea
                   value={form.message}
                   name='message'
                   onChange={handleChange}
                   required
                   rows={5}
-                  className='w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-gray-100 placeholder-gray-500 focus:outline-none transition-colors text-sm resize-none h-32'
+                  className='w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none transition-colors text-sm resize-none h-32'
                   placeholder='Your Message'
                 />
               </div>
@@ -194,7 +194,7 @@ export default function Contact() {
               <button
                 type='submit'
                 disabled={status === 'loading'}
-                className='w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-500/50 text-white font-medium py-3 rounded-lg transition-colors text-sm'>
+                className='w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-500/50 text-gray-900 dark:text-white font-medium py-3 rounded-lg transition-colors text-sm'>
                 {status === 'loading' ? 'Sending...' : 'Send Message'}
               </button>
 

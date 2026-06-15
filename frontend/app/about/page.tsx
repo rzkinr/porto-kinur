@@ -81,14 +81,14 @@ export default function About() {
           <p className='text-xs text-gray-500 uppercase tracking-widest'>
             About Me
           </p>
-          <h1 className='text-4xl font-bold text-white'>Who I Am</h1>
+          <h1 className='text-4xl font-bold text-gray-900 dark:text-white'>Who I Am</h1>
           {loading ?
             <div className='space-y-2 animate-pulse'>
-              <div className='h-4 bg-gray-800 rounded w-full' />
-              <div className='h-4 bg-gray-800 rounded w-3/4' />
+              <div className='h-4 bg-gray-100 dark:bg-gray-800 rounded w-full' />
+              <div className='h-4 bg-gray-100 dark:bg-gray-800 rounded w-3/4' />
             </div>
           : <>
-              <p className='text-gray-400 text-lg max-w-2xl leading-relaxed'>
+              <p className='text-gray-600 dark:text-gray-400 text-lg max-w-2xl leading-relaxed'>
                 {profile?.bio2 ||
                   'Berpengalaman di bidang web development, mobile development, dan IT Support. Saat ini fokus mendalami Golang dan backend architecture.'}
               </p>
@@ -102,7 +102,7 @@ export default function About() {
           transition={{ duration: 0.5, delay: 0.05 }}
           href='/resume.pdf'
           download='Rizki-Nur-Rokhim-CV.pdf'
-          className='inline-flex items-center gap-2 bg-blue-400 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors w-fit'>
+          className='inline-flex items-center gap-2 bg-blue-400 hover:bg-blue-700 text-gray-900 dark:text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors w-fit'>
           <Download size={16} /> Lihat CV
         </motion.a>
 
@@ -112,13 +112,13 @@ export default function About() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
           className='space-y-6'>
-          <h2 className='text-2xl font-semibold text-white'>Skills</h2>
+          <h2 className='text-2xl font-semibold text-gray-900 dark:text-white'>Skills</h2>
           {loading ?
             <div className='grid grid-cols-1 md:grid-cols-2 gap-6 animate-pulse'>
               {[1, 2, 3, 4].map((i) => (
                 <div key={i} className='space-y-2'>
-                  <div className='h-4 bg-gray-800 rounded w-1/3' />
-                  <div className='h-4 bg-gray-800 rounded w-full' />
+                  <div className='h-4 bg-gray-100 dark:bg-gray-800 rounded w-1/3' />
+                  <div className='h-4 bg-gray-100 dark:bg-gray-800 rounded w-full' />
                 </div>
               ))}
             </div>
@@ -127,14 +127,14 @@ export default function About() {
           : <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
               {skills.map((skill) => (
                 <div key={skill.id} className='space-y-3'>
-                  <p className='text-sm text-blue-400 font-medium'>
+                  <p className='text-sm text-blue-600 dark:text-blue-400 font-medium'>
                     {skill.category}
                   </p>
                   <div className='flex flex-wrap gap-2'>
                     {skill.items.split(',').map((item) => (
                       <span
                         key={item}
-                        className='px-3 py-1 text-sm bg-gray-800 text-gray-300 rounded-md border border-gray-700'>
+                        className='px-3 py-1 text-sm bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-300 dark:border-gray-700'>
                         {item.trim()}
                       </span>
                     ))}
@@ -151,20 +151,20 @@ export default function About() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className='space-y-6'>
-          <h2 className='text-2xl font-semibold text-white'>Experience</h2>
+          <h2 className='text-2xl font-semibold text-gray-900 dark:text-white'>Experience</h2>
           <div className='space-y-4'>
             {defaultExperiences.map((exp, i) => (
               <div
                 key={i}
-                className='border border-gray-800 rounded-xl p-6 hover:border-gray-600 transition-colors'>
+                className='border border-gray-200 dark:border-gray-800 rounded-xl p-6 hover:border-gray-400 dark:border-gray-600 transition-colors'>
                 <div className='flex justify-between items-start flex-wrap gap-2'>
                   <div>
-                    <h3 className='text-white font-semibold'>{exp.role}</h3>
-                    <p className='text-blue-400 text-sm'>{exp.company}</p>
+                    <h3 className='text-gray-900 dark:text-white font-semibold'>{exp.role}</h3>
+                    <p className='text-blue-600 dark:text-blue-400 text-sm'>{exp.company}</p>
                   </div>
                   <span className='text-gray-500 text-sm'>{exp.period}</span>
                 </div>
-                <p className='text-gray-400 text-sm mt-3 leading-relaxed'>
+                <p className='text-gray-600 dark:text-gray-400 text-sm mt-3 leading-relaxed'>
                   {exp.desc}
                 </p>
               </div>
@@ -178,23 +178,23 @@ export default function About() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
           className='space-y-6'>
-          <h2 className='text-2xl font-semibold text-white'>Education</h2>
+          <h2 className='text-2xl font-semibold text-gray-900 dark:text-white'>Education</h2>
           <div className='space-y-4'>
             {defaultEducation.map((edu, i) => (
               <div
                 key={i}
-                className='border border-gray-800 rounded-xl p-6 hover:border-gray-600 transition-colors'>
+                className='border border-gray-200 dark:border-gray-800 rounded-xl p-6 hover:border-gray-400 dark:border-gray-600 transition-colors'>
                 <div className='flex justify-between items-start flex-wrap gap-2'>
                   <div>
-                    <h3 className='text-white font-semibold'>{edu.degree}</h3>
-                    <p className='text-blue-400 text-sm'>{edu.school}</p>
+                    <h3 className='text-gray-900 dark:text-white font-semibold'>{edu.degree}</h3>
+                    <p className='text-blue-600 dark:text-blue-400 text-sm'>{edu.school}</p>
                   </div>
                   <div className='text-right'>
                     <span className='text-gray-500 text-sm block'>
                       {edu.period}
                     </span>
                     {edu.gpa && (
-                      <span className='text-green-400 text-sm'>{edu.gpa}</span>
+                      <span className='text-green-600 dark:text-green-400 text-sm'>{edu.gpa}</span>
                     )}
                   </div>
                 </div>
@@ -209,11 +209,11 @@ export default function About() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
           className='space-y-6'>
-          <h2 className='text-2xl font-semibold text-white'>Certifications</h2>
+          <h2 className='text-2xl font-semibold text-gray-900 dark:text-white'>Certifications</h2>
           {loading ?
             <div className='space-y-3 animate-pulse'>
               {[1, 2].map((i) => (
-                <div key={i} className='h-12 bg-gray-800 rounded-xl' />
+                <div key={i} className='h-12 bg-gray-100 dark:bg-gray-800 rounded-xl' />
               ))}
             </div>
           : certifications.length === 0 ?
@@ -222,12 +222,12 @@ export default function About() {
               {certifications.map((cert) => (
                 <div
                   key={cert.id}
-                  className='flex justify-between items-center border border-gray-800 rounded-xl px-6 py-4 hover:border-gray-600 transition-colors'>
+                  className='flex justify-between items-center border border-gray-200 dark:border-gray-800 rounded-xl px-6 py-4 hover:border-gray-400 dark:border-gray-600 transition-colors'>
                   <div>
-                    <p className='text-white text-sm font-medium'>
+                    <p className='text-gray-900 dark:text-white text-sm font-medium'>
                       {cert.name}
                     </p>
-                    <p className='text-blue-400 text-xs mt-1'>
+                    <p className='text-blue-600 dark:text-blue-400 text-xs mt-1'>
                       {cert.issuer} · {cert.cert_id}
                     </p>
                   </div>
