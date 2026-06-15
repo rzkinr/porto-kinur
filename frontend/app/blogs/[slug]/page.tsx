@@ -41,8 +41,12 @@ export default function BlogDetail() {
     return (
       <section className='min-h-screen px-6 pt-32 pb-20'>
         <div className='max-w-3xl mx-auto text-center space-y-4'>
-          <h1 className='text-4xl font-bold text-gray-900 dark:text-white'>Post not found</h1>
-          <Link href='/blog' className='text-blue-600 dark:text-blue-400 hover:underline'>
+          <h1 className='text-4xl font-bold text-gray-900 dark:text-white'>
+            Post not found
+          </h1>
+          <Link
+            href='/blogs'
+            className='text-blue-600 dark:text-blue-400 hover:underline'>
             ← Back to Blog
           </Link>
         </div>
@@ -72,7 +76,7 @@ export default function BlogDetail() {
           transition={{ duration: 0.5 }}
           className='space-y-4'>
           <p className='text-gray-500 dark:text-gray-500 text-sm'>
-            {new Date(post.createdAt).toLocaleDateString('id-ID', {
+            {new Date(post.created_at).toLocaleDateString('id-ID', {
               day: 'numeric',
               month: 'long',
               year: 'numeric',
@@ -90,7 +94,9 @@ export default function BlogDetail() {
               </span>
             ))}
             {post.read_time && (
-              <span className='text-gray-500 dark:text-gray-500 text-sm'>{post.read_time}</span>
+              <span className='text-gray-500 dark:text-gray-500 text-sm'>
+                {post.read_time}
+              </span>
             )}
             <span className='flex items-center gap-1 text-gray-500 dark:text-gray-500 text-sm'>
               <Eye size={14} /> {post.views} views

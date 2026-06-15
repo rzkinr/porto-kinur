@@ -22,7 +22,7 @@ export interface Blog {
   tags: string;
   read_time: string;
   views: number;
-  createdAt: string;
+  created_at: string;
 }
 
 export interface Contact {

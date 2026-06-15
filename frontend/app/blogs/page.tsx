@@ -28,7 +28,9 @@ export default function Blog() {
           <p className='text-xs text-gray-500 dark:text-gray-500 dark:text-gray-500 dark:text-gray-500 uppercase tracking-widest'>
             Writing
           </p>
-          <h1 className='text-4xl font-bold text-gray-900 dark:text-gray-900 dark:text-white'>My Blog</h1>
+          <h1 className='text-4xl font-bold text-gray-900 dark:text-gray-900 dark:text-white'>
+            My Blog
+          </h1>
           <p className='text-gray-600 dark:text-gray-600 dark:text-gray-400 text-lg max-w-2xl leading-relaxed'>
             Catatan perjalanan belajar — dari debugging aneh sampai hal-hal yang
             akhirnya masuk akal setelah berjam-jam.
@@ -48,7 +50,9 @@ export default function Blog() {
             ))}
           </div>
         : posts.length === 0 ?
-          <p className='text-gray-500 dark:text-gray-500 dark:text-gray-500 dark:text-gray-500'>Belum ada post.</p>
+          <p className='text-gray-500 dark:text-gray-500 dark:text-gray-500 dark:text-gray-500'>
+            Belum ada post.
+          </p>
         : <div className='space-y-4'>
             {posts.map((post, i) => (
               <motion.div
@@ -60,7 +64,7 @@ export default function Blog() {
                   <div className='border border-gray-200 dark:border-gray-200 dark:border-gray-800 rounded-xl p-6 hover:bg-gray-600 transition-colors group cursor-pointer'>
                     <div className='flex justify-between items-start flex-wrap gap-2 mb-3'>
                       <span className='text-gray-500 dark:text-gray-500 dark:text-gray-500 dark:text-gray-500 text-sm'>
-                        {new Date(post.createdAt).toLocaleDateString('id-ID', {
+                        {new Date(post.created_at).toLocaleDateString('id-ID', {
                           day: 'numeric',
                           month: 'long',
                           year: 'numeric',

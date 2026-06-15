@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rzkinr/backend-porto/config"
@@ -45,6 +46,8 @@ func CreateBlog(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	input.CreatedAt = time.Now()
 
 	if _, err := config.DB.NewInsert().Model(&input).Exec(context.Background()); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
