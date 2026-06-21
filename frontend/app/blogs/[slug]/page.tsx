@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ArrowLeft, Eye } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { getBlogBySlug, type Blog } from '@/lib/api';
+import { Skeleton, SkeletonText } from '@/components/Skeleton';
 
 export default function BlogDetail() {
   const params = useParams();
@@ -27,11 +28,9 @@ export default function BlogDetail() {
     return (
       <section className='min-h-screen px-6 pt-32 pb-20'>
         <div className='max-w-3xl mx-auto space-y-6 animate-pulse'>
-          <div className='h-4 bg-gray-100 dark:bg-gray-800 rounded w-24' />
-          <div className='h-8 bg-gray-100 dark:bg-gray-800 rounded w-3/4' />
-          <div className='h-4 bg-gray-100 dark:bg-gray-800 rounded w-full' />
-          <div className='h-4 bg-gray-100 dark:bg-gray-800 rounded w-full' />
-          <div className='h-4 bg-gray-100 dark:bg-gray-800 rounded w-2/3' />
+          <Skeleton className='h-4 w-24' />
+          <Skeleton className='h-9 w-3/4' />
+          <SkeletonText lines={4} />
         </div>
       </section>
     );

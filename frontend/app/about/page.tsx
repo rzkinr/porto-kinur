@@ -11,6 +11,7 @@ import {
   type Certification,
 } from '@/lib/api';
 import { Download } from 'lucide-react';
+import { Skeleton, SkeletonText } from '@/components/Skeleton';
 
 const defaultExperiences = [
   {
@@ -81,11 +82,13 @@ export default function About() {
           <p className='text-xs text-gray-500 uppercase tracking-widest'>
             About Me
           </p>
-          <h1 className='text-4xl font-bold text-gray-900 dark:text-white'>Who I Am</h1>
+          <h1 className='text-4xl font-bold text-gray-900 dark:text-white'>
+            Who I Am
+          </h1>
           {loading ?
             <div className='space-y-2 animate-pulse'>
-              <div className='h-4 bg-gray-100 dark:bg-gray-800 rounded w-full' />
-              <div className='h-4 bg-gray-100 dark:bg-gray-800 rounded w-3/4' />
+              <Skeleton className='h-4 w-1/3' />
+              <Skeleton className='h-8 w-full' />
             </div>
           : <>
               <p className='text-gray-600 dark:text-gray-400 text-lg max-w-2xl leading-relaxed'>
@@ -112,7 +115,9 @@ export default function About() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
           className='space-y-6'>
-          <h2 className='text-2xl font-semibold text-gray-900 dark:text-white'>Skills</h2>
+          <h2 className='text-2xl font-semibold text-gray-900 dark:text-white'>
+            Skills
+          </h2>
           {loading ?
             <div className='grid grid-cols-1 md:grid-cols-2 gap-6 animate-pulse'>
               {[1, 2, 3, 4].map((i) => (
@@ -151,7 +156,9 @@ export default function About() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className='space-y-6'>
-          <h2 className='text-2xl font-semibold text-gray-900 dark:text-white'>Experience</h2>
+          <h2 className='text-2xl font-semibold text-gray-900 dark:text-white'>
+            Experience
+          </h2>
           <div className='space-y-4'>
             {defaultExperiences.map((exp, i) => (
               <div
@@ -159,8 +166,12 @@ export default function About() {
                 className='border border-gray-200 dark:border-gray-800 rounded-xl p-6 hover:border-gray-400 dark:border-gray-600 transition-colors'>
                 <div className='flex justify-between items-start flex-wrap gap-2'>
                   <div>
-                    <h3 className='text-gray-900 dark:text-white font-semibold'>{exp.role}</h3>
-                    <p className='text-blue-600 dark:text-blue-400 text-sm'>{exp.company}</p>
+                    <h3 className='text-gray-900 dark:text-white font-semibold'>
+                      {exp.role}
+                    </h3>
+                    <p className='text-blue-600 dark:text-blue-400 text-sm'>
+                      {exp.company}
+                    </p>
                   </div>
                   <span className='text-gray-500 text-sm'>{exp.period}</span>
                 </div>
@@ -178,7 +189,9 @@ export default function About() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
           className='space-y-6'>
-          <h2 className='text-2xl font-semibold text-gray-900 dark:text-white'>Education</h2>
+          <h2 className='text-2xl font-semibold text-gray-900 dark:text-white'>
+            Education
+          </h2>
           <div className='space-y-4'>
             {defaultEducation.map((edu, i) => (
               <div
@@ -186,15 +199,21 @@ export default function About() {
                 className='border border-gray-200 dark:border-gray-800 rounded-xl p-6 hover:border-gray-400 dark:border-gray-600 transition-colors'>
                 <div className='flex justify-between items-start flex-wrap gap-2'>
                   <div>
-                    <h3 className='text-gray-900 dark:text-white font-semibold'>{edu.degree}</h3>
-                    <p className='text-blue-600 dark:text-blue-400 text-sm'>{edu.school}</p>
+                    <h3 className='text-gray-900 dark:text-white font-semibold'>
+                      {edu.degree}
+                    </h3>
+                    <p className='text-blue-600 dark:text-blue-400 text-sm'>
+                      {edu.school}
+                    </p>
                   </div>
                   <div className='text-right'>
                     <span className='text-gray-500 text-sm block'>
                       {edu.period}
                     </span>
                     {edu.gpa && (
-                      <span className='text-green-600 dark:text-green-400 text-sm'>{edu.gpa}</span>
+                      <span className='text-green-600 dark:text-green-400 text-sm'>
+                        {edu.gpa}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -209,11 +228,13 @@ export default function About() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
           className='space-y-6'>
-          <h2 className='text-2xl font-semibold text-gray-900 dark:text-white'>Certifications</h2>
+          <h2 className='text-2xl font-semibold text-gray-900 dark:text-white'>
+            Certifications
+          </h2>
           {loading ?
             <div className='space-y-3 animate-pulse'>
               {[1, 2].map((i) => (
-                <div key={i} className='h-12 bg-gray-100 dark:bg-gray-800 rounded-xl' />
+                <Skeleton key={i} className='h-16 w-full rounded-xl' />
               ))}
             </div>
           : certifications.length === 0 ?

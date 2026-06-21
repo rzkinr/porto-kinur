@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, GitBranch, Search } from 'lucide-react';
 import { getProjects, type Project } from '@/lib/api';
+import { SkeletonCard } from '@/components/Skeleton';
 
 const statusColors: Record<string, string> = {
   'In Progress': 'bg-yellow-500/10 text-yellowe-400 border-yellow-500/20',
@@ -60,7 +61,9 @@ export default function Projects() {
           <p className='text-xs text-gray-500 dark:text-gray-500 uppercase tracking-widest'>
             My Work
           </p>
-          <h1 className='text-4xl font-bold text-gray-900 dark:text-white'>Projects</h1>
+          <h1 className='text-4xl font-bold text-gray-900 dark:text-white'>
+            Projects
+          </h1>
           <p className='text-gray-600 dark:text-gray-400 text-lg max-w-2xl leading-relaxed'>
             Beberapa project yang pernah saya kerjakan — dari automation bot
             sampai web development.
@@ -119,13 +122,7 @@ export default function Projects() {
         {loading ?
           <div className='space-y-4'>
             {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className='border border-gray-200 dark:border-gray-800 rounded-xl p-6 animate-pulse'>
-                <div className='h-5 bg-gray-100 dark:bg-gray-800 rounded w-1/3 mb-3' />
-                <div className='h-4 bg-gray-100 dark:bg-gray-800 rounded w-2/3 mb-2' />
-                <div className='h-4 bg-gray-100 dark:bg-gray-800 rounded w-1/2' />
-              </div>
+              <SkeletonCard key={i} />
             ))}
           </div>
         : filteredProjects.length === 0 ?

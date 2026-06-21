@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { getBlogs, type Blog } from '@/lib/api';
 import { Eye } from 'lucide-react';
+import { SkeletonCard } from '@/components/Skeleton';
 
 export default function Blog() {
   const [posts, setPosts] = useState<Blog[]>([]);
@@ -40,13 +41,7 @@ export default function Blog() {
         {loading ?
           <div className='space-y-4'>
             {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className='border border-gray-200 dark:border-gray-200 dark:border-gray-800 rounded-xl p-6 animate-pulse'>
-                <div className='h-5 bg-gray-100 dark:bg-gray-100 dark:bg-gray-800 rounded w-2/3 mb-3' />
-                <div className='h-4 bg-gray-100 dark:bg-gray-100 dark:bg-gray-800 rounded w-full mb-2' />
-                <div className='h-4 bg-gray-100 dark:bg-gray-100 dark:bg-gray-800 rounded w-3/4' />
-              </div>
+              <SkeletonCard key={i} />
             ))}
           </div>
         : posts.length === 0 ?
