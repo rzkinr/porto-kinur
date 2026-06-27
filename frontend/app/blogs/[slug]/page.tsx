@@ -5,8 +5,9 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowLeft, Eye } from 'lucide-react';
 import { useParams } from 'next/navigation';
-import { getBlogBySlug, type Blog } from '@/lib/api';
+import { getBlogBySlug, getRelatedBlogs, type Blog } from '@/lib/api';
 import { Skeleton, SkeletonText } from '@/components/Skeleton';
+import ReadingProgress from '@/components/ReadingProgress';
 
 export default function BlogDetail() {
   const params = useParams();
@@ -14,12 +15,16 @@ export default function BlogDetail() {
   const [post, setPost] = useState<Blog | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [related, setRelated] = useState<Blog[]>([]);
 
   useEffect(() => {
-    getBlogBySlug(slug)
-      .then((data) => {
+    Promise.all([getBlogBySlug(slug), getRelatedBlogs(slug)])
+      .then(([data, relatedBlogs]) => {
         if (!data) setNotFound(true);
-        else setPost(data);
+        else {
+          setPost(data);
+          setRelated(relatedBlogs);
+        }
       })
       .finally(() => setLoading(false));
   }, [slug]);
@@ -27,6 +32,7 @@ export default function BlogDetail() {
   if (loading) {
     return (
       <section className='min-h-screen px-6 pt-32 pb-20'>
+        <ReadingProgress />
         <div className='max-w-3xl mx-auto space-y-6 animate-pulse'>
           <Skeleton className='h-4 w-24' />
           <Skeleton className='h-9 w-3/4' />
@@ -115,6 +121,47 @@ export default function BlogDetail() {
           {post.content}
         </motion.div>
       </div>
+      {related.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className='space-y-6 pt-8 border-t border-gray-200 dark:border-gray-800'>
+          <h2 className='text-xl font-semibold text-gray-900 dark:text-white'>
+            Related Posts
+          </h2>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+            {related.map((r) => (
+              <Link key={r.id} href={`/blog/${r.slug}`}>
+                <div className='border border-gray-200 dark:border-gray-800 rounded-xl p-4 hover:border-gray-400 dark:hover:border-gray-600 transition-colors group h-full'>
+                  <p className='text-gray-500 dark:text-gray-500 text-xs mb-2'>
+                    {new Date(r.created_at).toLocaleDateString('id-ID', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                    })}
+                  </p>
+                  <h3 className='text-gray-900 dark:text-white text-sm font-medium group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors leading-snug mb-2'>
+                    {r.title}
+                  </h3>
+                  <div className='flex flex-wrap gap-1'>
+                    {r.tags
+                      .split(',')
+                      .slice(0, 2)
+                      .map((tag) => (
+                        <span
+                          key={tag}
+                          className='px-2 py-0.5 text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded border border-gray-300 dark:border-gray-700'>
+                          {tag.trim()}
+                        </span>
+                      ))}
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </motion.div>
+      )}
     </section>
   );
 }

@@ -293,3 +293,12 @@ export async function adminDeleteCertification(id: number): Promise<boolean> {
   });
   return res.ok;
 }
+
+export async function getRelatedBlogs(slug: string): Promise<Blog[]> {
+  const res = await fetch(`${API_URL}/blogs/${slug}/related`, {
+    cache: 'no-store',
+  });
+  if (!res.ok) return [];
+  const json = await res.json();
+  return json.data || [];
+}

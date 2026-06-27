@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -84,4 +85,67 @@ func DeleteBlog(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Blog deleted"})
+}
+
+func GetRelatedBlogs(c *gin.Context) {
+	slug := c.Param("slug")
+
+	//ambil blog berdasarkan slug
+	var current models.Blog
+	if err := config.DB.NewSelect().Model(&current).Where("slug = ?", slug).Scan(context.Background()); err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Blog not found"})
+		return
+	}
+
+	// ambil semua blog lain
+	var blogs []models.Blog
+	if err := config.DB.NewSelect().
+	Model(&blogs).
+	Where("slug != ?", slug).
+	OrderExpr("created_at DESC").
+	Limit(6).
+	Scan(context.Background()); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	//filter berdasarkan tag yang sama
+	currentTags := strings.Split(current.Tags, ",")
+	var related []models.Blog
+	for _, b := range blogs {
+		blogTags := strings.Split(b.Tags, ",")
+		for _, ct := range currentTags {
+			for _, bt := range blogTags {
+				if strings.TrimSpace(ct) == strings.TrimSpace(bt) {
+					related = append(related, b)
+					goto next
+				}
+			}
+		}
+	next:
+		if len(related) >= 3 {
+			break
+		}
+	}
+
+	// Kalau kurang dari 3, tambahkan post lain
+	if len(related) < 3 {
+		for _, b := range blogs {
+			found := false
+			for _, r := range related {
+				if r.ID == b.ID {
+					found = true
+					break
+				}
+			}
+			if !found {
+				related = append(related, b)
+			}
+			if len(related) >= 3 {
+				break
+			}
+		}
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": related})
 }

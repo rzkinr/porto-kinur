@@ -1,10 +1,23 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, GitBranch, ExternalLink, Mail } from 'lucide-react';
+import { getProfile, type Profile } from '@/lib/api';
+import { Skeleton } from '@/components/Skeleton';
 
 export default function Home() {
+  // Tambahkan state
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getProfile()
+      .then(setProfile)
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <section className='min-h-screen flex items-center justify-center px-6 pt-20'>
       <div className='max-w-5xl w-full mx-auto grid grid-cols-1 gap-12'>
@@ -25,17 +38,22 @@ export default function Home() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className='space-y-4'>
           <h1 className='text-5xl md:text-6xl font-bold text-gray-900 dark:text-white leading-tight tracking-tight'>
-            Hi, I'm{' '}
+            Hi, Im{' '}
             <span className='text-blue-500 dark:text-blue-400'>Rizki</span>
           </h1>
           <h2 className='text-2xl md:text-3xl font-medium text-gray-700 dark:text-gray-300'>
-            Full-Stack Developer
+            {loading ?
+              <Skeleton className='h-8 w-48' />
+            : profile?.tagline || 'Full-Stack Developer'}
           </h2>
-          <p className='text-gray-600 dark:text-gray-400 text-lg max-w-xl leading-relaxed'>
-            I build web applications and automate things that shouldn't be done
-            manually. Currently learning Golang and exploring backend
-            architecture.
-          </p>
+
+          <div className='text-gray-600 dark:text-gray-400 text-lg max-w-xl leading-relaxed'>
+            {loading ?
+              <Skeleton className='h-20 w-full' />
+            : profile?.bio1 ||
+              "I build web applications and automate things that shouldn't be done manually."
+            }
+          </div>
         </motion.div>
 
         <motion.div

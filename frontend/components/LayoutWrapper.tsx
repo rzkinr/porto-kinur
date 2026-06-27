@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import BackToTopButton from '@/components/BackToTop';
 
 export default function LayoutWrapper({
   children,
@@ -31,6 +32,7 @@ export default function LayoutWrapper({
         </motion.main>
       </AnimatePresence>
       <Footer />
+      <BackToTopButton />
     </>
   );
 }

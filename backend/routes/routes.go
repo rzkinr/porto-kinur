@@ -29,6 +29,7 @@ func SetupRoutes(r *gin.Engine) {
 		api.GET("/projects/:id", handlers.GetProjectByID)
 		api.GET("/blogs", handlers.GetBlogs)
 		api.GET("/blogs/:slug", handlers.GetBlogBySlug)
+		api.GET("/blogs/:slug/related", handlers.GetRelatedBlogs)
 		api.GET("/profile", handlers.GetProfile)
 		api.GET("/skills", handlers.GetSkills)
 		api.GET("/certifications", handlers.GetCertifications)
